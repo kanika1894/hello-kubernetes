@@ -53,8 +53,8 @@ jobs:
         #labels: # optional
         # List of tags
         tags: |
-          jysintestregistry.azurecr.io/jysinTestImage:first
-          jysintestregistry.azurecr.io/jysinTestImage:${{ github.sha }}
+          jysintestregistry.azurecr.io/jysintestimage:first
+          jysintestregistry.azurecr.io/jysintestimage:${{ github.sha }}
         # Always attempt to pull a newer version of the image
         #pull: # optional, default is false
         # Sets the target stage to build
