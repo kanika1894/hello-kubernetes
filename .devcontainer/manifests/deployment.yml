@@ -1,19 +1,19 @@
 apiVersion : apps/v1
 kind: Deployment
 metadata:
-  name: akskodey
+  name: jysinTestName
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: akskodey
+      app: jysinTestName
   template:
     metadata:
       labels:
-        app: akskodey
+        app: jysinTestName
     spec:
       containers:
-        - name: akskodey
+        - name: jysinTestContainer
           image: nginx
           ports:
           - containerPort: 80
