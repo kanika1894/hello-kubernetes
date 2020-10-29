@@ -54,7 +54,7 @@ jobs:
         # List of tags
         tags: |
           first
-          {{ github.sha }}
+          ${{ github.sha }}
         # Always attempt to pull a newer version of the image
         #pull: # optional, default is false
         # Sets the target stage to build
