@@ -55,7 +55,7 @@ jobs:
         # Load is a shorthand for --output=type=docker
         load: true
         # Push is a shorthand for --output=type=registry
-        push: true
+        #push: true
         # List of output destinations (format: type=local,dest=path)
         #outputs: # optional
         # List of external cache sources for buildx (eg. user/app:cache, type=local,src=path/to/dir)
