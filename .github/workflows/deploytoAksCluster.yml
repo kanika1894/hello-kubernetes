@@ -2,16 +2,16 @@ on: [push]
 jobs:
   build-and-deploy:
     env:
-      REGISTRY_URL: akskodeyacr.azurecr.io
-      NAMESPACE: akskodey8190
-      IMAGE_NAME: akskodey
-      SECRET_NAME: akskodey
+      REGISTRY_URL: jysintestregistry.azurecr.io
+      NAMESPACE: jysinTestNS
+      IMAGE_NAME: jysinTestImage
+      SECRET_NAME: jysinTestImage
 
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
     
-    - uses: azure/k8s-set-context@users/koushdey/setEnvVarSpike
+    - uses: azure/k8s-set-context@v1
       with:
          kubeconfig: ${{ secrets.aksKodey_7582a }} 
       id: login
@@ -24,7 +24,7 @@ jobs:
             echo `kubectl create namespace $NAMESPACE`
         fi
        
-    - uses: azure/k8s-deploy@users/koushdey/spikeEnvVar
+    - uses: azure/k8s-deploy@uv1
       with:
         namespace: ${{ env.NAMESPACE  }}
         manifests: |
