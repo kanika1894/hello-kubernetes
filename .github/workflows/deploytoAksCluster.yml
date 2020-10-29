@@ -1,4 +1,5 @@
 on: [push]
+
 jobs:
   build-and-deploy:
     env:
@@ -23,46 +24,58 @@ jobs:
         then
             echo `kubectl create namespace $NAMESPACE`
         fi
-      
+    
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+        
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+    
+    - name: Login to DockerHub
+      uses: docker/login-action@v1 
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    
     - name: Build and push Docker images
       uses: docker/build-push-action@v2.0.1
       with:
         # Builder instance
-        builder: # optional
+        #builder: # optional
         # Build's context is the set of files located in the specified PATH or URL
-        context: # optional
+        #context: # optional
         # Path to the Dockerfile
-        file: # optional, default is ./Dockerfile
+        #file: # optional, default is ./Dockerfile
         # List of build-time variables
-        build-args: # optional
+        #build-args: # optional
         # List of metadata for an image
-        labels: # optional
+        #labels: # optional
         # List of tags
-        tags: # optional
+        #tags: # optional
         # Always attempt to pull a newer version of the image
-        pull: # optional, default is false
+        #pull: # optional, default is false
         # Sets the target stage to build
-        target: # optional
+        #target: # optional
         # List of extra privileged entitlement (eg. network.host,security.insecure)
-        allow: # optional
+        #allow: # optional
         # Do not use cache when building the image
-        no-cache: # optional, default is false
+        #no-cache: # optional, default is false
         # List of target platforms for build
-        platforms: # optional
+        #platforms: # optional
         # Load is a shorthand for --output=type=docker
-        load: # optional, default is false
+        #load: # optional, default is false
         # Push is a shorthand for --output=type=registry
-        push: # optional, default is false
+        push: true
         # List of output destinations (format: type=local,dest=path)
-        outputs: # optional
+        #outputs: # optional
         # List of external cache sources for buildx (eg. user/app:cache, type=local,src=path/to/dir)
-        cache-from: # optional
+        #cache-from: # optional
         # List of cache export destinations for buildx (eg. user/app:cache, type=local,dest=path/to/dir)
-        cache-to: # optional
+        #cache-to: # optional
         # List of secrets to expose to the build (eg. key=value, GIT_AUTH_TOKEN=mytoken)
-        secrets: # optional
+        #secrets: # optional
         # GitHub Token used to authenticate against a repository for Git context
-        github-token: # optional, default is ${{ github.token }}
+        #github-token: # optional, default is ${{ github.token }}
        
    # - uses: azure/k8s-deploy@v1
     #  with:
