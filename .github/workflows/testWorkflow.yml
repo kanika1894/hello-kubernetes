@@ -53,7 +53,7 @@ jobs:
         # List of target platforms for build
         #platforms: # optional
         # Load is a shorthand for --output=type=docker
-        #load: # optional, default is false
+        load: true
         # Push is a shorthand for --output=type=registry
         push: true
         # List of output destinations (format: type=local,dest=path)
