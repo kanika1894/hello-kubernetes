@@ -26,6 +26,7 @@ jobs:
         password: ${{ secrets.AZURE_CLIENT_SECRET }}
     
     - name: Build and push Docker images
+      id: docker_build
       uses: Josh-01/build-push-action@users/jysin/AddImageInspect
       with:
         # Builder instance
@@ -91,3 +92,8 @@ jobs:
           .devcontainer/manifests/service.yml
         images: |
           jysintestregistry.azurecr.io/jysintestimage:first
+  
+    - name: Dockerfile path
+      run: |
+        echo ${{ steps.docker_build.outputs.dockerfilePath }}
+        docker image inspect jysintestregistry.azurecr.io/jysintestimage:first
