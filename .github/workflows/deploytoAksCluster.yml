@@ -83,10 +83,12 @@ jobs:
     - name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}
        
-   # - uses: azure/k8s-deploy@v1
-    #  with:
-     #   namespace: ${{ env.NAMESPACE  }}
-      #  manifests: |
-       #   .devcontainer/manifests/deployment.yml
-        #  .devcontainer/manifests/service.yml
+    - uses: azure/k8s-deploy@v1
+      with:
+        namespace: ${{ env.NAMESPACE  }}
+        manifests: |
+          .devcontainer/manifests/deployment.yml
+          .devcontainer/manifests/service.yml
+        images: |
+          jysintestregistry.azurecr.io/jysintestimage:first
           
