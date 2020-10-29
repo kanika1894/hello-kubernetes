@@ -4,7 +4,7 @@ jobs:
   build-and-deploy:
     env:
       REGISTRY_URL: jysintestregistry.azurecr.io
-      NAMESPACE: jysintestns
+      NAMESPACE: jysintestns2
       IMAGE_NAME: jysinTestImage
       SECRET_NAME: jysinTestImage
 
