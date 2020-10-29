@@ -1,0 +1,93 @@
+on: [push]
+
+jobs:
+  build-and-deploy:
+    env:
+      REGISTRY_URL: jysintestregistry.azurecr.io
+      NAMESPACE: jysintestns
+      IMAGE_NAME: jysinTestImage
+      SECRET_NAME: jysinTestImage
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    
+    - uses: azure/k8s-set-context@v1
+      with:
+         kubeconfig: ${{ secrets.aksKodey_7582a }} 
+      id: login
+    
+    - name: Create namespace
+      run: |
+        namespacePresent=`kubectl get namespace | grep $NAMESPACE | wc -l`
+        if [ $namespacePresent -eq 0 ]
+        then
+            echo `kubectl create namespace $NAMESPACE`
+        fi
+    
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+        
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+    
+    - name: Login to ACR
+      uses: docker/login-action@v1
+      with:
+        registry: jysintestregistry.azurecr.io
+        username: ${{ secrets.AZURE_CLIENT_ID }}
+        password: ${{ secrets.AZURE_CLIENT_SECRET }}
+    
+    - name: Build and push Docker images
+      uses: docker/build-push-action@v2.0.1
+      with:
+        # Builder instance
+        #builder: # optional
+        # Build's context is the set of files located in the specified PATH or URL
+        context: .
+        # Path to the Dockerfile
+        #file: # optional, default is ./Dockerfile
+        # List of build-time variables
+        #build-args: # optional
+        # List of metadata for an image
+        #labels: # optional
+        # List of tags
+        tags: |
+          jysintestregistry.azurecr.io/jysintestimage:first
+          jysintestregistry.azurecr.io/jysintestimage:${{ github.sha }}
+        # Always attempt to pull a newer version of the image
+        #pull: # optional, default is false
+        # Sets the target stage to build
+        #target: # optional
+        # List of extra privileged entitlement (eg. network.host,security.insecure)
+        #allow: # optional
+        # Do not use cache when building the image
+        #no-cache: # optional, default is false
+        # List of target platforms for build
+        #platforms: # optional
+        # Load is a shorthand for --output=type=docker
+        #load: # optional, default is false
+        # Push is a shorthand for --output=type=registry
+        push: true
+        # List of output destinations (format: type=local,dest=path)
+        #outputs: # optional
+        # List of external cache sources for buildx (eg. user/app:cache, type=local,src=path/to/dir)
+        #cache-from: # optional
+        # List of cache export destinations for buildx (eg. user/app:cache, type=local,dest=path/to/dir)
+        #cache-to: # optional
+        # List of secrets to expose to the build (eg. key=value, GIT_AUTH_TOKEN=mytoken)
+       # secrets: 
+        # GitHub Token used to authenticate against a repository for Git context
+        #github-token: # optional, default is ${{ github.token }}
+  
+    - name: Image digest
+      run: echo ${{ steps.docker_build.outputs.digest }}
+       
+    - uses: azure/k8s-deploy@v1
+      with:
+        namespace: ${{ env.NAMESPACE  }}
+        manifests: |
+          .devcontainer/manifests/deployment.yml
+          .devcontainer/manifests/service.yml
+        images: |
+          jysintestregistry.azurecr.io/jysintestimage:first
