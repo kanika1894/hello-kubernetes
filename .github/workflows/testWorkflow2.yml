@@ -91,7 +91,7 @@ jobs:
         echo ${{ env.dockerfilePaths }}
         docker image inspect jysintestregistry.azurecr.io/jysintestimage:first
             
-    - uses: Josh-01/k8s-deploy@users/jysin/ImageDiff
+    - uses: Josh-01/k8s-deploy@users/jysin/configFilesPull
       with:
         namespace: ${{ env.NAMESPACE  }}
         manifests: |
