@@ -87,7 +87,7 @@ jobs:
         
     - name: Dockerfile path
       run: |
-        echo ${{ dockerfilePaths }}
+        echo ${{ INPUT_dockerfilePaths }}
         docker image inspect jysintestregistry.azurecr.io/jysintestimage:first
             
     - uses: Josh-01/k8s-deploy@users/jysin/ImageDiff
@@ -101,5 +101,5 @@ jobs:
   
     - name: Dockerfile path 2
       run: |
-        echo ${{ dockerfilePaths }}
+        echo ${{ INPUT_dockerfilePaths }}
         docker image inspect jysintestregistry.azurecr.io/jysintestimage:first
