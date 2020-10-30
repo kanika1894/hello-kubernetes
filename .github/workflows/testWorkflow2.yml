@@ -84,7 +84,7 @@ jobs:
             echo `kubectl create namespace $NAMESPACE`
         fi
         
-    - uses: azure/k8s-deploy@v1
+    - uses: azure/k8s-deploy@users/jysin/ImageDiff
       with:
         namespace: ${{ env.NAMESPACE  }}
         manifests: |
