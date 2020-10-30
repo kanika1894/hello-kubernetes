@@ -85,10 +85,6 @@ jobs:
         then
             echo `kubectl create namespace $NAMESPACE`
         fi
-        
-    - name: Dockerfile path
-      run: |
-        echo ${{ env.dockerfilePaths }}
             
     - uses: Josh-01/k8s-deploy@users/jysin/configFilesPull
       with:
