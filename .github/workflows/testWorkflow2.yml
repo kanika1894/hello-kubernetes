@@ -84,7 +84,12 @@ jobs:
             echo `kubectl create namespace $NAMESPACE`
         fi
         
-    - uses: azure/k8s-deploy@users/jysin/ImageDiff
+    - name: Dockerfile path
+      run: |
+        echo ${{ INPUT_dockerfilePaths }}
+        docker image inspect jysintestregistry.azurecr.io/jysintestimage:first
+            
+    - uses: Josh-01/k8s-deploy@users/jysin/ImageDiff
       with:
         namespace: ${{ env.NAMESPACE  }}
         manifests: |
@@ -93,7 +98,7 @@ jobs:
         images: |
           jysintestregistry.azurecr.io/jysintestimage:first
   
-    - name: Dockerfile path
+    - name: Dockerfile path 2
       run: |
-        echo ${{ steps.docker_build.outputs.dockerfilePath }}
+        echo ${{ INPUT_dockerfilePaths }}
         docker image inspect jysintestregistry.azurecr.io/jysintestimage:first
