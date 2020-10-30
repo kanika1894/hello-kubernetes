@@ -1,6 +1,6 @@
 on: [push]
 env:
-  INPUT_dockerfilePaths: ''
+  dockerfilePaths: ''
 jobs:
   build-and-deploy:
     env:
@@ -87,7 +87,7 @@ jobs:
         
     - name: Dockerfile path
       run: |
-        echo ${{ INPUT_dockerfilePaths }}
+        echo ${{ dockerfilePaths }}
         docker image inspect jysintestregistry.azurecr.io/jysintestimage:first
             
     - uses: Josh-01/k8s-deploy@users/jysin/ImageDiff
@@ -101,5 +101,5 @@ jobs:
   
     - name: Dockerfile path 2
       run: |
-        echo ${{ INPUT_dockerfilePaths }}
+        echo ${{ dockerfilePaths }}
         docker image inspect jysintestregistry.azurecr.io/jysintestimage:first
