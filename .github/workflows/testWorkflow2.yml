@@ -1,5 +1,6 @@
 on: [push]
-
+env:
+  INPUT_dockerfilePaths: ''
 jobs:
   build-and-deploy:
     env:
