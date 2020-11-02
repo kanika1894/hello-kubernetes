@@ -85,15 +85,24 @@ jobs:
         then
             echo `kubectl create namespace $NAMESPACE`
         fi
+    
+    - uses: Azure/k8s-create-secret@v1
+      with:
+        container-registry-url: jysintestregistry.azurecr.io
+        container-registry-username: ${{ secrets.AZURE_CLIENT_ID }}
+        container-registry-password: ${{ secrets.AZURE_CLIENT_SECRET }}
+        secret-name: demo-k8s-secret
             
     - uses: Josh-01/k8s-deploy@users/jysin/DiffData
       with:
         namespace: ${{ env.NAMESPACE  }}
+        imagepullsecrets: demo-k8s-secret
         manifests: |
           .devcontainer/manifests/deployment.yml
           .devcontainer/manifests/service.yml
         images: |
           jysintestregistry.azurecr.io/jysintestimage:first
+        
   
     - name: Dockerfile path
       run: |
