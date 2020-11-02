@@ -86,7 +86,7 @@ jobs:
             echo `kubectl create namespace $NAMESPACE`
         fi
             
-    - uses: Josh-01/k8s-deploy@local1
+    - uses: Josh-01/k8s-deploy@users/jysin/configFilesPull
       with:
         namespace: ${{ env.NAMESPACE  }}
         manifests: |
