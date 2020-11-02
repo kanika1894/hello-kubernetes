@@ -74,6 +74,7 @@ jobs:
           .devcontainer/manifests/service.yml
         images: |
           jysintestregistry.azurecr.io/jysintestimage:first
+        imagepullsecrets: aks2secret
         
   
     - name: Dockerfile path
