@@ -1,15 +1,13 @@
 on: [push]
 env:
   dockerfilePaths: ''
+  REGISTRY_URL: jysintestregistry.azurecr.io
+  NAMESPACE: jysintestns1
+  IMAGE_NAME: jysinTestImage
+  SECRET_NAME: jysinTestImage
   
 jobs:
-  build-and-deploy:
-    env:
-      REGISTRY_URL: jysintestregistry.azurecr.io
-      NAMESPACE: jysintestns1
-      IMAGE_NAME: jysinTestImage
-      SECRET_NAME: jysinTestImage
-
+  build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -50,7 +48,10 @@ jobs:
   
     - name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}
-   
+      
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
     - uses: azure/k8s-set-context@v1
       with:
          kubeconfig: ${{ secrets.aksKodey_7582a }}
