@@ -76,6 +76,7 @@ jobs:
     - uses: azure/k8s-set-context@v1
       with:
          kubeconfig: ${{ secrets.aksKodey_7582a }} 
+         k8s-url: 'jysinaks1-dns-c27aa747.hcp.southindia.azmk8s.io'  
       id: login
     
     - name: Create namespace
