@@ -17,4 +17,5 @@ spec:
           image: jysintestregistry.azurecr.io/jysintestimage:first
           ports:
           - containerPort: 80
-          imagepullsecrets: aks2secret
+      imagepullsecrets: 
+        - name: aks2secret
