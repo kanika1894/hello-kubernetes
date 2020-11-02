@@ -1,11 +1,13 @@
 on: [push]
 env:
-  dockerfilePaths: ['test':'testvalue']
+  dockerfilePaths: |
+    'test: testvalue'
   REGISTRY_URL: jysintestregistry.azurecr.io
   NAMESPACE: jysintestns1
   IMAGE_NAME: jysinTestImage
   SECRET_NAME: jysinTestImage
-      
+  
+jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
