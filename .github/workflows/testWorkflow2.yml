@@ -88,6 +88,7 @@ jobs:
     
     - uses: Azure/k8s-create-secret@v1
       with:
+        namespace: ${{ env.NAMESPACE  }}
         container-registry-url: jysintestregistry.azurecr.io
         container-registry-username: ${{ secrets.AZURE_CLIENT_ID }}
         container-registry-password: ${{ secrets.AZURE_CLIENT_SECRET }}
