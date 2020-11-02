@@ -48,6 +48,10 @@ jobs:
   
     - name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}
+    
+    - name: Dockerfile path
+      run: |
+        echo ${{ env.dockerfilePaths }}
       
   deploy:
     runs-on: ubuntu-latest
@@ -57,7 +61,11 @@ jobs:
       with:
          kubeconfig: ${{ secrets.aksKodey_7582a }}
       id: login
-    
+      
+    - name: Dockerfile path
+      run: |
+        echo ${{ env.dockerfilePaths }}
+        
     - name: Create namespace
       run: |
         namespacePresent=`kubectl get namespace | grep $NAMESPACE | wc -l`
