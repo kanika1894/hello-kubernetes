@@ -37,8 +37,3 @@ jobs:
         images: |
           jysintestregistry.azurecr.io/jysintestimage:first
         imagepullsecrets: aks2secret
-        
-  
-    - name: Dockerfile path
-      run: |
-        echo ${{ env.dockerfilePaths }}
