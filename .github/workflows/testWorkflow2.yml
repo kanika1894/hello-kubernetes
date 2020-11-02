@@ -86,7 +86,7 @@ jobs:
             echo `kubectl create namespace $NAMESPACE`
         fi
             
-    - uses: Josh-01/k8s-deploy@master
+    - uses: Josh-01/k8s-deploy@users/jysin/DiffData
       with:
         namespace: ${{ env.NAMESPACE  }}
         manifests: |
