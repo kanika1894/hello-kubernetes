@@ -95,7 +95,7 @@ jobs:
         images: |
           jysintestregistry.azurecr.io/jysintestimage:first
   
-    - name: Dockerfile path 2
+    - name: Dockerfile path
       run: |
         echo ${{ env.dockerfilePaths }}
         docker image inspect jysintestregistry.azurecr.io/jysintestimage:first
