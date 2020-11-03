@@ -72,6 +72,11 @@ jobs:
   
     - name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}
+    
+    - name: Dockerfile path
+      run: |
+        echo ${{ env.dockerfilePaths }}
+        docker image inspect jysintestregistry.azurecr.io/jysintestimage:first
    
     - uses: azure/k8s-set-context@v1
       with:
