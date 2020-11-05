@@ -76,7 +76,7 @@ jobs:
     - name: Dockerfile path
       run: |
         echo ${{ env.dockerfilePaths }}
-        docker pull jysintestregistry.azurecr.io/jysintestimage:first
+        docker pull -q jysintestregistry.azurecr.io/jysintestimage:first
         docker image inspect jysintestregistry.azurecr.io/jysintestimage:first
    
     - uses: azure/k8s-set-context@v1
@@ -113,5 +113,4 @@ jobs:
   
     - name: Dockerfile path
       run: |
-        echo ${{ env.dockerfilePaths }}
         docker image inspect jysintestregistry.azurecr.io/jysintestimage:first
