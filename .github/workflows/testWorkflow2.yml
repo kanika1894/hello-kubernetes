@@ -107,4 +107,4 @@ jobs:
   
     - name: Dockerfile path
       run: |
-        docker image inspect jysintestregistry.azurecr.io/jysintestimage:${{ steps.docker_build.outputs.digest }}
+        docker image inspect jysintestregistry.azurecr.io/jysintestimage@${{ steps.docker_build.outputs.digest }}
