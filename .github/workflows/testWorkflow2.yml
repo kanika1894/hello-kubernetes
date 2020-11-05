@@ -29,7 +29,7 @@ jobs:
     
     - name: Build and push Docker images
       id: docker_build
-      uses: Josh-01/build-push-action@users/jysin/AddImageInspect
+      uses: Josh-01/build-push-action@AddDockerfilePathToImageLabel
       with:
         # Builder instance
         #builder: # optional
@@ -100,7 +100,7 @@ jobs:
         container-registry-password: ${{ secrets.AZURE_CLIENT_SECRET }}
         secret-name: demo-k8s-secret
             
-    - uses: Josh-01/k8s-deploy@releases/v1.3
+    - uses: Josh-01/k8s-deploy@releases/v1.4
       with:
         namespace: ${{ env.NAMESPACE  }}
         imagepullsecrets: demo-k8s-secret
