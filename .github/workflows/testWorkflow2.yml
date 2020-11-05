@@ -102,9 +102,9 @@ jobs:
           .devcontainer/manifests/deployment.yml
           .devcontainer/manifests/service.yml
         images: |
-          jysintestregistry.azurecr.io/jysintestimage:${{ github.sha }}
+          jysintestregistry.azurecr.io/jysintestimage:${{ steps.docker_build.outputs.digest }}
         
   
     - name: Dockerfile path
       run: |
-        docker image inspect jysintestregistry.azurecr.io/jysintestimage:first
+        docker image inspect jysintestregistry.azurecr.io/jysintestimage:${{ steps.docker_build.outputs.digest }}
