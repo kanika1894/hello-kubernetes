@@ -51,40 +51,6 @@ jobs:
     
     - name: Dockerfile path
       run: |
-        echo ${{ env.dockerfilePaths }}
+        docker pull -q jysintestregistry.azurecr.io/jysintestimage@${{ steps.docker_build.outputs.digest }}
+        docker inspect --format='json .Config' jysintestregistry.azurecr.io/jysintestimage@${{ steps.docker_build.outputs.digest }}
       
-  deploy:
-    runs-on: ubuntu-latest
-    needs: [build]
-    steps:
-    - uses: azure/k8s-set-context@v1
-      with:
-         kubeconfig: ${{ secrets.aksKodey_7582a }}
-      id: login
-      
-    - name: Dockerfile path
-      run: |
-        echo ${{ env.dockerfilePaths }}
-        
-    - name: Create namespace
-      run: |
-        namespacePresent=`kubectl get namespace | grep $NAMESPACE | wc -l`
-        if [ $namespacePresent -eq 0 ]
-        then
-            echo `kubectl create namespace $NAMESPACE`
-        fi
-            
-    - uses: Josh-01/k8s-deploy@releases/v1.3
-      with:
-        namespace: ${{ env.NAMESPACE  }}
-        manifests: |
-          .devcontainer/manifests/deployment.yml
-          .devcontainer/manifests/service.yml
-        images: |
-          jysintestregistry.azurecr.io/jysintestimage:first
-        imagepullsecrets: aks2secret
-        
-  
-    - name: Dockerfile path
-      run: |
-        echo ${{ env.dockerfilePaths }}
