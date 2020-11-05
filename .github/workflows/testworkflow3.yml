@@ -27,7 +27,7 @@ jobs:
     
     - name: Build and push Docker images
       id: docker_build
-      uses: Josh-01/build-push-action@users/jysin/AddImageInspect
+      uses: Josh-01/build-push-action@AddDockerfilePathToImageLabel
       with:
         # Build's context is the set of files located in the specified PATH or URL
         context: .
@@ -52,5 +52,5 @@ jobs:
     - name: Dockerfile path
       run: |
         docker pull -q jysintestregistry.azurecr.io/jysintestimage@${{ steps.docker_build.outputs.digest }}
-        docker inspect --format='{{json .Config}}' jysintestregistry.azurecr.io/jysintestimage@${{ steps.docker_build.outputs.digest }}
+        docker inspect --format='{{json .Config .Id}}' jysintestregistry.azurecr.io/jysintestimage@${{ steps.docker_build.outputs.digest }}
       
