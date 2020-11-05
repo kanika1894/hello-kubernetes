@@ -52,5 +52,5 @@ jobs:
     - name: Dockerfile path
       run: |
         docker pull -q jysintestregistry.azurecr.io/jysintestimage@${{ steps.docker_build.outputs.digest }}
-        docker inspect --format='json .Config' jysintestregistry.azurecr.io/jysintestimage@${{ steps.docker_build.outputs.digest }}
+        docker inspect --format='{{json .Config}}' jysintestregistry.azurecr.io/jysintestimage@${{ steps.docker_build.outputs.digest }}
       
