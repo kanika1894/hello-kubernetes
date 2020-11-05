@@ -102,7 +102,7 @@ jobs:
           .devcontainer/manifests/deployment.yml
           .devcontainer/manifests/service.yml
         images: |
-          jysintestregistry.azurecr.io/jysintestimage:first
+          jysintestregistry.azurecr.io/jysintestimage:${{ github.sha }}
         
   
     - name: Dockerfile path
