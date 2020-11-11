@@ -27,7 +27,7 @@ jobs:
         username: ${{ secrets.AZURE_CLIENT_ID }}
         password: ${{ secrets.AZURE_CLIENT_SECRET }}
     
-    - name: Build and push Docker images
+    - name: Build and push Docker images new branch
       id: docker_build
       uses: Josh-01/build-push-action@users/jysin/dockerfileLink
       with:
