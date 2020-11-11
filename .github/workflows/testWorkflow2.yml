@@ -29,7 +29,7 @@ jobs:
     
     - name: Build and push Docker images
       id: docker_build
-      uses: Josh-01/build-push-action@AddDockerfilePathToImageLabel
+      uses: Josh-01/build-push-action@users/jysin/dockerfileLink
       with:
         # Builder instance
         #builder: # optional
@@ -69,6 +69,7 @@ jobs:
        # secrets: 
         # GitHub Token used to authenticate against a repository for Git context
         #github-token: # optional, default is ${{ github.token }}
+        trace-data: true  
   
     - name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}
