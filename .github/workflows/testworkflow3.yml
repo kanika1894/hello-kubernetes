@@ -10,47 +10,28 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    
-    - name: Set up QEMU
-      uses: docker/setup-qemu-action@v1
-        
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
-    
-    - name: Login to ACR
-      uses: docker/login-action@v1
-      with:
-        registry: jysintestregistry.azurecr.io
-        username: ${{ secrets.AZURE_CLIENT_ID }}
-        password: ${{ secrets.AZURE_CLIENT_SECRET }}
-    
-    - name: Build and push Docker images
-      id: docker_build
-      uses: Josh-01/build-push-action@AddDockerfilePathToImageLabel
-      with:
-        # Build's context is the set of files located in the specified PATH or URL
-        context: .
-        # Path to the Dockerfile
-        #file: # optional, default is ./Dockerfile
-        # List of metadata for an image
-        #labels: # optional
-        # List of tags
-        tags: |
-          jysintestregistry.azurecr.io/jysintestimage:first
-          jysintestregistry.azurecr.io/jysintestimage:${{ github.sha }}
-        # Load is a shorthand for --output=type=docker
-        #load: true
-        # Push is a shorthand for --output=type=registry
-        push: true
-        # List of output destinations (format: type=local,dest=path)
-        #outputs: # optional
-  
-    - name: Image digest
-      run: echo ${{ steps.docker_build.outputs.digest }}
-    
-    - name: Dockerfile path
-      run: |
-        docker pull -q jysintestregistry.azurecr.io/jysintestimage@${{ steps.docker_build.outputs.digest }}
-        docker inspect --format='{{json .Config}}' jysintestregistry.azurecr.io/jysintestimage@${{ steps.docker_build.outputs.digest }}
-      
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
+    - name: Dump job context
+      env:
+        JOB_CONTEXT: ${{ toJson(job) }}
+      run: echo "$JOB_CONTEXT"
+    - name: Dump steps context
+      env:
+        STEPS_CONTEXT: ${{ toJson(steps) }}
+      run: echo "$STEPS_CONTEXT"
+    - name: Dump runner context
+      env:
+        RUNNER_CONTEXT: ${{ toJson(runner) }}
+      run: echo "$RUNNER_CONTEXT"
+    - name: Dump strategy context
+      env:
+        STRATEGY_CONTEXT: ${{ toJson(strategy) }}
+      run: echo "$STRATEGY_CONTEXT"
+    - name: Dump matrix context
+      env:
+        MATRIX_CONTEXT: ${{ toJson(matrix) }}
+      run: echo "$MATRIX_CONTEXT"
+
