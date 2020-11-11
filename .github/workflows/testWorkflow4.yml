@@ -24,7 +24,7 @@ jobs:
     - name: Build and push image to ACR
       id: build-image
       run: |
-        docker build -f  ".devcontainer/Dockerfile" -t jysintestregistry.azurecr.io/jysintestimage:${{ github.sha }} 
+        docker build "$GITHUB_WORKSPACE/.devcontainer" -f  ".devcontainer/Dockerfile" -t jysintestregistry.azurecr.io/jysintestimage:${{ github.sha }} 
         docker push jysintestregistry.azurecr.io/jysintestimage:${{ github.sha }}
   
     - name: Image digest
