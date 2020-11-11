@@ -1,6 +1,4 @@
 on: [push]
-env:
-  dockerfilePaths: ''
   
 jobs:
   build-and-deploy:
@@ -26,9 +24,6 @@ jobs:
       run: |
         docker build "$GITHUB_WORKSPACE/.devcontainer" -f  ".devcontainer/Dockerfile" -t jysintestregistry.azurecr.io/jysintestimage:${{ github.sha }} 
         docker push jysintestregistry.azurecr.io/jysintestimage:${{ github.sha }}
-  
-    - name: Image digest
-      run: echo ${{ steps.docker_build.outputs.digest }}
    
     - uses: azure/k8s-set-context@v1
       with:
@@ -51,4 +46,4 @@ jobs:
           .devcontainer/manifests/deployment.yml
           .devcontainer/manifests/service.yml
         images: |
-          jysintestregistry.azurecr.io/jysintestimage@${{ steps.docker_build.outputs.digest }}
+          jysintestregistry.azurecr.io/jysintestimage:${{ github.sha }}
