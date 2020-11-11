@@ -71,7 +71,7 @@ jobs:
         #github-token: # optional, default is ${{ github.token }}
         trace-data: true  
   
-    - name: Image digest show
+    - name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}
    
     - uses: azure/k8s-set-context@v1
