@@ -42,3 +42,6 @@ jobs:
           .devcontainer/manifests/service.yml
         images: |
           jysintestregistry.azurecr.io/jysintestimage:first
+      env:
+        CR_USERNAME: ${{ secrets.AZURE_CLIENT_ID }}
+        CR_PASSWORD: ${{ secrets.AZURE_CLIENT_SECRET }}
