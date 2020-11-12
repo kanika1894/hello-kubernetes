@@ -5,11 +5,9 @@ jobs:
     env:
       REGISTRY_URL: jysintestregistry.azurecr.io
       NAMESPACE: jysintestns1
-      IMAGE_NAME: jysinTestImage
-      SECRET_NAME: jysinTestImage
       CR_USERNAME: ${{ secrets.AZURE_CLIENT_ID }}
       CR_PASSWORD: ${{ secrets.AZURE_CLIENT_SECRET }}
-      HELM_FILE_PATH: ${{ secrets.HELM_CHART_PATH }}
+      HELM_CHART_PATH: ${{ secrets.HELM_CHART_PATH }}
 
     runs-on: ubuntu-latest
     steps:
