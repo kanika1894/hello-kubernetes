@@ -17,7 +17,7 @@ jobs:
          kubeconfig: ${{ secrets.aksKodey_7582a }}
       id: login
     
-    - name: Create namespace
+    - name: Create namespace d
       run: |
         namespacePresent=`kubectl get namespace | grep $NAMESPACE | wc -l`
         if [ $namespacePresent -eq 0 ]
