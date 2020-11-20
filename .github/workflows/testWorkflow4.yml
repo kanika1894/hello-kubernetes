@@ -39,7 +39,7 @@ jobs:
         namespace: ${{ env.NAMESPACE  }}
         imagepullsecrets: demo-k8s-secret
         manifests: |
-          ./devcontainer/manifests/deployment.yml
-          ./devcontainer/manifests/service.yml
+          devcontainer/manifests/deployment.yml
+          devcontainer/manifests/service.yml
         images: |
           jysintestregistry.azurecr.io/jysintestimage:first
