@@ -7,7 +7,8 @@ jobs:
       NAMESPACE: jysintestns1
       CR_USERNAME: ${{ secrets.AZURE_CLIENT_ID }}
       CR_PASSWORD: ${{ secrets.AZURE_CLIENT_SECRET }}
-      HELM_CHART_PATHS: './helmChart'
+      HELM_CHART_PATHS: |
+        ./helmChart
 
     runs-on: ubuntu-latest
     steps:
