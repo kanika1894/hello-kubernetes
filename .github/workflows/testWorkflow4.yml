@@ -37,7 +37,7 @@ jobs:
         container-registry-password: ${{ secrets.AZURE_CLIENT_SECRET }}
         secret-name: demo-k8s-secret
             
-    - uses: Azure/k8s-deploy@releases/v1.2
+    - uses: Azure/k8s-deploy@v1.2
       with:
         namespace: ${{ env.NAMESPACE  }}
         imagepullsecrets: demo-k8s-secret
