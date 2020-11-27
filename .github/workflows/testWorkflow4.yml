@@ -8,9 +8,9 @@ jobs:
       CR_USERNAME: ${{ secrets.AZURE_CLIENT_ID }}
       CR_PASSWORD: ${{ secrets.AZURE_CLIENT_SECRET }}
       HELM_CHART_PATHS: |
-        ./helmChart/file1
+        ./helmChart/file2
       DOCKERFILE_PATHS: |
-          jysintestregistry.azurecr.io/jysintestimage:second ./Dockerfile
+          jysintestregistry.azurecr.io/jysintestimage:third ./Dockerfile
 
     runs-on: ubuntu-latest
     steps:
