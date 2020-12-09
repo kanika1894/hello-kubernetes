@@ -1,16 +1,14 @@
 on: [push]
-env:
-  dockerfilePaths: ''
   
 jobs:
   build-and-deploy:
     env:
       REGISTRY_URL: jysintestregistry.azurecr.io
-      NAMESPACE: jysintestnsnew3
+      NAMESPACE: jysindemo-ns2
       CR_USERNAME: ${{ secrets.AZURE_CLIENT_ID }}
       CR_PASSWORD: ${{ secrets.AZURE_CLIENT_SECRET }}
       DOCKERFILE_PATHS: |
-        jysintestregistry.azurecr.io/k8sdemo:${{ github.sha }} ./Dockerfile
+        jysintestregistry.azurecr.io/jysindemoimage:${{ github.sha }} ./Dockerfile
 
     runs-on: ubuntu-latest
     steps:
@@ -19,13 +17,13 @@ jobs:
     - name: Login to ACR
       uses: docker/login-action@v1
       with:
-        registry: jysintestregistry.azurecr.io
-        username: ${{ secrets.AZURE_CLIENT_ID }}
-        password: ${{ secrets.AZURE_CLIENT_SECRET }}
+        registry: ${{ env.REGISTRY_URL }}
+        username: ${{ env.CR_USERNAME }}
+        password: ${{ env.CR_PASSWORD }}
     
     - run: |
-        docker build . -t jysintestregistry.azurecr.io/k8sdemo:${{ github.sha }}
-        docker push jysintestregistry.azurecr.io/k8sdemo:${{ github.sha }}
+        docker build . -t jysintestregistry.azurecr.io/jysindemoimage:first -t jysintestregistry.azurecr.io/jysindemoimage:${{ github.sha }}
+        docker push jysintestregistry.azurecr.io/jysindemoimage:${{ github.sha }}
    
     - uses: azure/k8s-set-context@v1
       with:
@@ -43,9 +41,9 @@ jobs:
     - uses: Azure/k8s-create-secret@v1
       with:
         namespace: ${{ env.NAMESPACE  }}
-        container-registry-url: jysintestregistry.azurecr.io
-        container-registry-username: ${{ secrets.AZURE_CLIENT_ID }}
-        container-registry-password: ${{ secrets.AZURE_CLIENT_SECRET }}
+        container-registry-url: ${{ env.REGISTRY_URL }}
+        container-registry-username: ${{ env.CR_USERNAME }}
+        container-registry-password: ${{ env.CR_PASSWORD }}
         secret-name: demo-k8s-secret
             
     - uses: Azure/k8s-deploy@releases/v1.2
@@ -56,4 +54,4 @@ jobs:
           .devcontainer/manifests/deployment.yml
           .devcontainer/manifests/service.yml
         images: |
-          jysintestregistry.azurecr.io/jysintestimage@${{  github.sha }}
+          jysintestregistry.azurecr.io/jysindemoimage@${{ github.sha }}
