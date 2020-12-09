@@ -1,15 +1,14 @@
 on: [push]
+env:
+    REGISTRY_URL: jysintestregistry.azurecr.io
+    NAMESPACE: jysindemo-ns2
+    CR_USERNAME: ${{ secrets.AZURE_CLIENT_ID }}
+    CR_PASSWORD: ${{ secrets.AZURE_CLIENT_SECRET }}
+    DOCKERFILE_PATHS: |
+      jysintestregistry.azurecr.io/jysindemoimage:${{ github.sha }} ./Dockerfile
   
 jobs:
-  build-and-deploy:
-    env:
-      REGISTRY_URL: jysintestregistry.azurecr.io
-      NAMESPACE: jysindemo-ns2
-      CR_USERNAME: ${{ secrets.AZURE_CLIENT_ID }}
-      CR_PASSWORD: ${{ secrets.AZURE_CLIENT_SECRET }}
-      DOCKERFILE_PATHS: |
-        jysintestregistry.azurecr.io/jysindemoimage:${{ github.sha }} ./Dockerfile
-
+  build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -24,7 +23,12 @@ jobs:
     - run: |
         docker build . -t jysintestregistry.azurecr.io/jysindemoimage:first -t jysintestregistry.azurecr.io/jysindemoimage:${{ github.sha }}
         docker push jysintestregistry.azurecr.io/jysindemoimage:${{ github.sha }}
-   
+ 
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+      
     - uses: azure/k8s-set-context@v1
       with:
          kubeconfig: ${{ secrets.AKS_JYSINAKS2_KUBECONFIG }}
