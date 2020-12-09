@@ -36,9 +36,6 @@ jobs:
           jysintestregistry.azurecr.io/jysintestimage:first
           jysintestregistry.azurecr.io/jysintestimage:${{ github.sha }}
         trace-data: true  
-  
-    - name: Image digest
-      run: echo ${{ steps.docker_build.outputs.digest }}
    
     - uses: azure/k8s-set-context@v1
       with:
