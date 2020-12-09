@@ -1,6 +1,4 @@
 on: [push]
-env:
-  dockerfilePaths: ''
   
 jobs:
   build-and-deploy:
@@ -23,9 +21,9 @@ jobs:
     - name: Login to ACR
       uses: docker/login-action@v1
       with:
-        registry: jysintestregistry.azurecr.io
-        username: ${{ secrets.AZURE_CLIENT_ID }}
-        password: ${{ secrets.AZURE_CLIENT_SECRET }}
+        registry: ${{ env.REGISTRY_URL }}
+        username: ${{ env.CR_USERNAME }}
+        password: ${{ env.CR_PASSWORD }}
     
     - name: Build and push Docker images
       id: docker_build
@@ -58,9 +56,9 @@ jobs:
     - uses: Azure/k8s-create-secret@v1
       with:
         namespace: ${{ env.NAMESPACE  }}
-        container-registry-url: jysintestregistry.azurecr.io
-        container-registry-username: ${{ secrets.AZURE_CLIENT_ID }}
-        container-registry-password: ${{ secrets.AZURE_CLIENT_SECRET }}
+        container-registry-url: ${{ env.REGISTRY_URL }}
+        container-registry-username: ${{ env.CR_USERNAME }}
+        container-registry-password: ${{ env.CR_PASSWORD }}
         secret-name: demo-k8s-secret
             
     - uses: Azure/k8s-deploy@releases/v1.2
