@@ -4,7 +4,7 @@ jobs:
   build-and-deploy:
     env:
       REGISTRY_URL: jysintestregistry.azurecr.io
-      NAMESPACE: jysindemons1
+      NAMESPACE: jysindemo-ns1
       CR_USERNAME: ${{ secrets.AZURE_CLIENT_ID }}
       CR_PASSWORD: ${{ secrets.AZURE_CLIENT_SECRET }}
 
@@ -66,5 +66,5 @@ jobs:
           .devcontainer/manifests/deployment.yml
           .devcontainer/manifests/service.yml
         images: |
-          jysintestregistry.azurecr.io/jysintestimage@${{  github.sha }}
+          jysintestregistry.azurecr.io/jysintestimage@${{ steps.docker_build.outputs.digest }}
 
