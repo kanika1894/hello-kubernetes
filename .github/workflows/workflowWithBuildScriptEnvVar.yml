@@ -54,4 +54,4 @@ jobs:
           .devcontainer/manifests/deployment.yml
           .devcontainer/manifests/service.yml
         images: |
-          jysintestregistry.azurecr.io/jysindemoimage@${{ github.sha }}
+          jysintestregistry.azurecr.io/jysindemoimage:${{ github.sha }}
