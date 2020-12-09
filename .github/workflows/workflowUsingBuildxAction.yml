@@ -33,8 +33,8 @@ jobs:
         context: .
         # List of tags
         tags: |
-          jysintestregistry.azurecr.io/jysintestimage:first
-          jysintestregistry.azurecr.io/jysintestimage:${{ github.sha }}
+          jysintestregistry.azurecr.io/jysindemoimage:first
+          jysintestregistry.azurecr.io/jysindemoimage:${{ github.sha }}
         trace-data: true  
    
     - uses: azure/k8s-set-context@v1
@@ -66,5 +66,5 @@ jobs:
           .devcontainer/manifests/deployment.yml
           .devcontainer/manifests/service.yml
         images: |
-          jysintestregistry.azurecr.io/jysintestimage@${{ steps.docker_build.outputs.digest }}
+          jysintestregistry.azurecr.io/jysindemoimage@${{ steps.docker_build.outputs.digest }}
 
