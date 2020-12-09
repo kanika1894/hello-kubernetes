@@ -6,13 +6,9 @@ jobs:
   build-and-deploy:
     env:
       REGISTRY_URL: jysintestregistry.azurecr.io
-      NAMESPACE: jysintestns1
+      NAMESPACE: jysintestnsnew2
       CR_USERNAME: ${{ secrets.AZURE_CLIENT_ID }}
       CR_PASSWORD: ${{ secrets.AZURE_CLIENT_SECRET }}
-      HELM_CHART_PATHS: |
-        ./helmChart
-      DOCKERFILE_PATHS: |
-        jysintestregistry.azurecr.io/jysintestimage:second ./Dockerfile
 
     runs-on: ubuntu-latest
     steps:
@@ -35,44 +31,12 @@ jobs:
       id: docker_build
       uses: Josh-01/build-push-action@AddDockerfilePathToImageLabel
       with:
-        # Builder instance
-        #builder: # optional
         # Build's context is the set of files located in the specified PATH or URL
         context: .
-        # Path to the Dockerfile
-        #file: # optional, default is ./Dockerfile
-        # List of build-time variables
-        #build-args: # optional
-        # List of metadata for an image
-        #labels: # optional
         # List of tags
         tags: |
           jysintestregistry.azurecr.io/jysintestimage:first
           jysintestregistry.azurecr.io/jysintestimage:${{ github.sha }}
-        # Always attempt to pull a newer version of the image
-        #pull: # optional, default is false
-        # Sets the target stage to build
-        #target: # optional
-        # List of extra privileged entitlement (eg. network.host,security.insecure)
-        #allow: # optional
-        # Do not use cache when building the image
-        #no-cache: # optional, default is false
-        # List of target platforms for build
-        #platforms: # optional
-        # Load is a shorthand for --output=type=docker
-        #load: true
-        # Push is a shorthand for --output=type=registry
-        push: true
-        # List of output destinations (format: type=local,dest=path)
-        #outputs: # optional
-        # List of external cache sources for buildx (eg. user/app:cache, type=local,src=path/to/dir)
-        #cache-from: # optional
-        # List of cache export destinations for buildx (eg. user/app:cache, type=local,dest=path/to/dir)
-        #cache-to: # optional
-        # List of secrets to expose to the build (eg. key=value, GIT_AUTH_TOKEN=mytoken)
-       # secrets: 
-        # GitHub Token used to authenticate against a repository for Git context
-        #github-token: # optional, default is ${{ github.token }}
         trace-data: true  
   
     - name: Image digest
