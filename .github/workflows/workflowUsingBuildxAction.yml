@@ -66,5 +66,5 @@ jobs:
           .devcontainer/manifests/deployment.yml
           .devcontainer/manifests/service.yml
         images: |
-          jysintestregistry.azurecr.io/jysindemoimage@${{ steps.docker_build.outputs.digest }}
+          jysintestregistry.azurecr.io/jysindemoimage:first
 
