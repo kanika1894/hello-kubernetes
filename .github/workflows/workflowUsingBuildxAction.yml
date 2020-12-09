@@ -35,6 +35,7 @@ jobs:
         tags: |
           jysintestregistry.azurecr.io/jysindemoimage:first
           jysintestregistry.azurecr.io/jysindemoimage:${{ github.sha }}
+        push: true
         trace-data: true  
    
     - uses: azure/k8s-set-context@v1
