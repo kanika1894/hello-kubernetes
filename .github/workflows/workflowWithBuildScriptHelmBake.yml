@@ -1,0 +1,69 @@
+on: [push]
+env:
+    REGISTRY_URL: jysintestregistry.azurecr.io
+    NAMESPACE: jysintestnsnew4
+    CR_USERNAME: ${{ secrets.AZURE_CLIENT_ID }}
+    CR_PASSWORD: ${{ secrets.AZURE_CLIENT_SECRET }}
+    HELM_CHART_PATHS: |
+      ./helmCharts/file1
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    
+    - name: Login to ACR
+      uses: docker/login-action@v1
+      with:
+        registry: jysintestregistry.azurecr.io
+        username: ${{ secrets.AZURE_CLIENT_ID }}
+        password: ${{ secrets.AZURE_CLIENT_SECRET }}
+    
+    - run: |
+        docker build . -t jysintestregistry.azurecr.io/k8sdemo:${{ github.sha }} --label dockerfile-path=./Dockerfile
+        docker push jysintestregistry.azurecr.io/k8sdemo:${{ github.sha }}
+   
+   deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    
+    - uses: azure/k8s-set-context@v1
+      with:
+         kubeconfig: ${{ secrets.AKS_JYSINAKS2_KUBECONFIG }}
+      id: login
+    
+    - name: Create namespace
+      run: |
+        namespacePresent=`kubectl get namespace | grep $NAMESPACE | wc -l`
+        if [ $namespacePresent -eq 0 ]
+        then
+            echo `kubectl create namespace $NAMESPACE`
+        fi
+    
+    - uses: Azure/k8s-create-secret@v1
+      with:
+        namespace: ${{ env.NAMESPACE  }}
+        container-registry-url: jysintestregistry.azurecr.io
+        container-registry-username: ${{ secrets.AZURE_CLIENT_ID }}
+        container-registry-password: ${{ secrets.AZURE_CLIENT_SECRET }}
+        secret-name: demo-k8s-secret
+        
+    - uses: azure/k8s-bake@v1
+      with:
+        renderEngine: 'helm'
+        helmChart: ${{ env.HELM_CHART_PATHS }}
+        overrideFiles: './aks-helloworld/values-override.yaml'
+        overrides: |     
+          replicas:2
+        helm-version: 'latest' 
+      id: bake
+            
+    - uses: Azure/k8s-deploy@releases/v1.2
+      with:
+        namespace: ${{ env.NAMESPACE  }}
+        imagepullsecrets: demo-k8s-secret
+        manifests: ${{ steps.bake.outputs.manifestsBundle }}
+        images: |
+          jysintestregistry.azurecr.io/jysintestimage@${{  github.sha }}
