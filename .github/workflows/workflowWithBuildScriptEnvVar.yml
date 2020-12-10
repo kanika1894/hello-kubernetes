@@ -4,8 +4,6 @@ env:
     NAMESPACE: jysindemo-ns2
     REGISTRY_CREDENTIALS: |
         jysintestregistry.azurecr.io ${{ secrets.AZURE_CLIENT_ID }} ${{ secrets.AZURE_CLIENT_SECRET }}
-    DOCKERFILE_PATHS: |
-        jysintestregistry.azurecr.io/jysindemoimage:${{ github.sha }} ./Dockerfile
   
 jobs:
   deploy:
@@ -34,7 +32,7 @@ jobs:
         container-registry-password: ${{ secrets.AZURE_CLIENT_SECRET }}
         secret-name: demo-k8s-secret
             
-    - uses: Azure/k8s-deploy@releases/v1.2
+    - uses: Azure/k8s-deploy@users/jysin/ConfigFilePathsAddition1_3
       with:
         namespace: ${{ env.NAMESPACE  }}
         imagepullsecrets: demo-k8s-secret
