@@ -22,8 +22,8 @@ jobs:
       uses: docker/login-action@v1
       with:
         registry: ${{ env.REGISTRY_URL }}
-        username: ${{ env.REGISTRY_CREDENTIALS[env.REGISTRY_URL][0] }}
-        password: ${{ env.REGISTRY_CREDENTIALS[env.REGISTRY_URL][1] }}
+        username: ${{ secrets.AZURE_CLIENT_ID }}
+        password: ${{ secrets.AZURE_CLIENT_SECRET }}
     
     - name: Build and push Docker images
       id: docker_build
