@@ -6,7 +6,7 @@ jobs:
       REGISTRY_URL: jysintestregistry.azurecr.io
       NAMESPACE: jysindemo-ns3
       REGISTRY_CREDENTIALS: |
-        jysintestregistry.azurecr.io ${ secrets.AZURE_CLIENT_ID } ${ secrets.AZURE_CLIENT_SECRET }
+        jysintestregistry.azurecr.io ${{ secrets.AZURE_CLIENT_ID }} ${{ secrets.AZURE_CLIENT_SECRET }}
 
     runs-on: ubuntu-latest
     steps:
