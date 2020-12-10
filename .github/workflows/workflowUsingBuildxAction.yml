@@ -4,9 +4,9 @@ jobs:
   build-and-deploy:
     env:
       REGISTRY_URL: jysintestregistry.azurecr.io
-      NAMESPACE: jysindemo-ns1
-      CR_USERNAME: ${{ secrets.AZURE_CLIENT_ID }}
-      CR_PASSWORD: ${{ secrets.AZURE_CLIENT_SECRET }}
+      NAMESPACE: jysindemo-ns3
+      REGISTRY_CREDENTIALS: |
+        jysintestregistry.azurecr.io ${ secrets.AZURE_CLIENT_ID } ${ secrets.AZURE_CLIENT_SECRET }
 
     runs-on: ubuntu-latest
     steps:
@@ -22,8 +22,8 @@ jobs:
       uses: docker/login-action@v1
       with:
         registry: ${{ env.REGISTRY_URL }}
-        username: ${{ env.CR_USERNAME }}
-        password: ${{ env.CR_PASSWORD }}
+        username: ${{ secrets.AZURE_CLIENT_ID }}
+        password: ${{ secrets.AZURE_CLIENT_SECRET }}
     
     - name: Build and push Docker images
       id: docker_build
