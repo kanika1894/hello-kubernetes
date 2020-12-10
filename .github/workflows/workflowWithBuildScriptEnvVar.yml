@@ -2,28 +2,12 @@ on: [push]
 env:
     REGISTRY_URL: jysintestregistry.azurecr.io
     NAMESPACE: jysindemo-ns2
-    CR_USERNAME: ${{ secrets.AZURE_CLIENT_ID }}
-    CR_PASSWORD: ${{ secrets.AZURE_CLIENT_SECRET }}
+    REGISTRY_CREDENTIALS: |
+        jysintestregistry.azurecr.io ${{ secrets.AZURE_CLIENT_ID }} ${{ secrets.AZURE_CLIENT_SECRET }}
     DOCKERFILE_PATHS: |
-      jysintestregistry.azurecr.io/jysindemoimage:${{ github.sha }} ./Dockerfile
+        jysintestregistry.azurecr.io/jysindemoimage:${{ github.sha }} ./Dockerfile
   
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v1
-    
-    - name: Login to ACR
-      uses: docker/login-action@v1
-      with:
-        registry: ${{ env.REGISTRY_URL }}
-        username: ${{ env.CR_USERNAME }}
-        password: ${{ env.CR_PASSWORD }}
-    
-    - run: |
-        docker build . -t jysintestregistry.azurecr.io/jysindemoimage:first -t jysintestregistry.azurecr.io/jysindemoimage:${{ github.sha }}
-        docker push jysintestregistry.azurecr.io/jysindemoimage:${{ github.sha }}
- 
   deploy:
     runs-on: ubuntu-latest
     steps:
@@ -46,8 +30,8 @@ jobs:
       with:
         namespace: ${{ env.NAMESPACE  }}
         container-registry-url: ${{ env.REGISTRY_URL }}
-        container-registry-username: ${{ env.CR_USERNAME }}
-        container-registry-password: ${{ env.CR_PASSWORD }}
+        container-registry-username: ${{ secrets.AZURE_CLIENT_ID }}
+        container-registry-password: ${{ secrets.AZURE_CLIENT_SECRET }}
         secret-name: demo-k8s-secret
             
     - uses: Azure/k8s-deploy@releases/v1.2
@@ -58,4 +42,4 @@ jobs:
           .devcontainer/manifests/deployment.yml
           .devcontainer/manifests/service.yml
         images: |
-          jysintestregistry.azurecr.io/jysindemoimage:${{ github.sha }}
+          jysintestregistry.azurecr.io/jysindemoimage:first
