@@ -35,7 +35,7 @@ jobs:
         # List of tags
         tags: |
           jysintestregistry.azurecr.io/jysindemoimage:first
-          ${{ IMAGE_NAME_1 }}
+          ${{ env.IMAGE_NAME_1 }}
         push: true
         trace-data: true  
    
@@ -68,4 +68,4 @@ jobs:
           .devcontainer/manifests/deployment.yml
           .devcontainer/manifests/service.yml
         images: |
-          ${{ IMAGE_NAME_1 }}
+          ${{ env.IMAGE_NAME_1 }}
