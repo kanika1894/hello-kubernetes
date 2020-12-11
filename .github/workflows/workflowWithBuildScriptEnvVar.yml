@@ -5,8 +5,7 @@ env:
     REGISTRY_USERNAME_1: ${{ secrets.AZURE_CLIENT_ID }}
     REGISTRY_PASSWORD_1: ${{ secrets.AZURE_CLIENT_SECRET }}
     IMAGE_NAME_1: jysintestregistry.azurecr.io/jysindemoimage:first
-    IMAGE_DOCKERFILE_1:  ./Dockerfile
-
+    
 jobs:
   deploy:
     runs-on: ubuntu-latest
