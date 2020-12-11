@@ -2,10 +2,10 @@ on: [push]
 env:
     NAMESPACE: jysindemo-ns2
     REGISTRY_URL_1: jysintestregistry.azurecr.io
-    1_REGISTRY_USERNAME: ${{ secrets.AZURE_CLIENT_ID }}
-    1_REGISTRY_PASSWORD: ${{ secrets.AZURE_CLIENT_SECRET }}
-    1_IMAGE_NAME: jysintestregistry.azurecr.io/jysindemoimage:first
-    1_IMAGE_DOCKERFILE:  ./Dockerfile
+    REGISTRY_USERNAME_1: ${{ secrets.AZURE_CLIENT_ID }}
+    REGISTRY_PASSWORD_1: ${{ secrets.AZURE_CLIENT_SECRET }}
+    IMAGE_NAME_1: jysintestregistry.azurecr.io/jysindemoimage:first
+    IMAGE_DOCKERFILE_1:  ./Dockerfile
 
   
 jobs:
@@ -30,9 +30,9 @@ jobs:
     - uses: Azure/k8s-create-secret@v1
       with:
         namespace: ${{ env.NAMESPACE  }}
-        container-registry-url: ${{ env.1_REGISTRY_URL }}
-        container-registry-username: ${{ env.1_REGISTRY_USERNAME }}
-        container-registry-password: ${{ env.1_REGISTRY_PASSWORD }}
+        container-registry-url: ${{ env.REGISTRY_URL_1 }}
+        container-registry-username: ${{ env.REGISTRY_USERNAME_1 }}
+        container-registry-password: ${{ env.REGISTRY_PASSWORD_1 }}
         secret-name: demo-k8s-secret
             
     - uses: Azure/k8s-deploy@users/jysin/ConfigFilePathsAddition1_3
