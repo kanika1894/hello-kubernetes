@@ -1,7 +1,7 @@
 on: [push]
 env:
     NAMESPACE: jysindemo-ns2
-    1_REGISTRY_URL: jysintestregistry.azurecr.io
+    REGISTRY_URL_1: jysintestregistry.azurecr.io
     1_REGISTRY_USERNAME: ${{ secrets.AZURE_CLIENT_ID }}
     1_REGISTRY_PASSWORD: ${{ secrets.AZURE_CLIENT_SECRET }}
     1_IMAGE_NAME: jysintestregistry.azurecr.io/jysindemoimage:first
