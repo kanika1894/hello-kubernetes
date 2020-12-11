@@ -62,7 +62,7 @@ jobs:
             
     - uses: Azure/k8s-deploy@users/jysin/ConfigFilePathsAddition1_3
       with:
-        namespace: ${{ env.NAMESPACE  }}
+        namespace: ${{ env.NAMESPACE }}
         imagepullsecrets: demo-k8s-secret
         manifests: |
           .devcontainer/manifests/deployment.yml
