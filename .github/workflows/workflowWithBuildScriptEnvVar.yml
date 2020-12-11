@@ -7,7 +7,6 @@ env:
     IMAGE_NAME_1: jysintestregistry.azurecr.io/jysindemoimage:first
     IMAGE_DOCKERFILE_1:  ./Dockerfile
 
-  
 jobs:
   deploy:
     runs-on: ubuntu-latest
