@@ -1,7 +1,12 @@
 on: [push]
 env:
-    REGISTRY_URL: jysintestregistry.azurecr.io
     NAMESPACE: jysindemo-ns2
+    1_REGISTRY_URL: jysintestregistry.azurecr.io
+    1_REGISTRY_USERNAME: ${{ secrets.AZURE_CLIENT_ID }}
+    1_REGISTRY_PASSWORD: ${{ secrets.AZURE_CLIENT_SECRET }}
+    1_IMAGE_NAME: jysintestregistry.azurecr.io/jysindemoimage:first
+    1_IMAGE_DOCKERFILE:  ./Dockerfile
+
   
 jobs:
   deploy:
@@ -21,20 +26,13 @@ jobs:
         then
             echo `kubectl create namespace $NAMESPACE`
         fi
-        
-    - name: Login to ACR
-      uses: docker/login-action@v1
-      with:
-        registry: ${{ env.REGISTRY_URL }}
-        username: ${{ secrets.AZURE_CLIENT_ID }}
-        password: ${{ secrets.AZURE_CLIENT_SECRET }}
     
     - uses: Azure/k8s-create-secret@v1
       with:
         namespace: ${{ env.NAMESPACE  }}
-        container-registry-url: ${{ env.REGISTRY_URL }}
-        container-registry-username: ${{ secrets.AZURE_CLIENT_ID }}
-        container-registry-password: ${{ secrets.AZURE_CLIENT_SECRET }}
+        container-registry-url: ${{ env.1_REGISTRY_URL }}
+        container-registry-username: ${{ env.1_REGISTRY_USERNAME }}
+        container-registry-password: ${{ env.1_REGISTRY_PASSWORD }}
         secret-name: demo-k8s-secret
             
     - uses: Azure/k8s-deploy@users/jysin/ConfigFilePathsAddition1_3
