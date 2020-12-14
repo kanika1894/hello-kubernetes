@@ -4,8 +4,6 @@ env:
     NAMESPACE: jysindemo-ns3
     CR_USERNAME: ${{ secrets.AZURE_CLIENT_ID }}
     CR_PASSWORD: ${{ secrets.AZURE_CLIENT_SECRET }}
-    HELM_CHART_PATHS: |
-      ./helmCharts/file1
   
 jobs:
   build:
