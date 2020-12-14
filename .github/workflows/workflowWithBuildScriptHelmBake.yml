@@ -44,21 +44,13 @@ jobs:
         container-registry-username: ${{ env.CR_USERNAME }}
         container-registry-password: ${{ env.CR_PASSWORD }}
         secret-name: demo-k8s-secret
-        
-    - uses: azure/k8s-bake@v1
-      with:
-        renderEngine: 'helm'
-        helmChart: ${{ env.HELM_CHART_PATHS }}
-        overrideFiles: './aks-helloworld/values-override.yaml'
-        overrides: |     
-          replicas:2
-        helm-version: 'latest' 
-      id: bake
             
-    - uses: Azure/k8s-deploy@releases/v1.2
+    - uses: Azure/k8s-deploy@users/jysin/ConfigFilePathsAddition1_3
       with:
-        namespace: ${{ env.NAMESPACE  }}
+        namespace: ${{ env.NAMESPACE }}
         imagepullsecrets: demo-k8s-secret
-        manifests: ${{ steps.bake.outputs.manifestsBundle }}
+        manifests: |
+          .devcontainer/manifests/deployment.yml
+          .devcontainer/manifests/service.yml
         images: |
-          jysintestregistry.azurecr.io/jysindemoimage@${{  github.sha }}
+          jysintestregistry.azurecr.io/jysindemoimage:${{ github.sha }}
