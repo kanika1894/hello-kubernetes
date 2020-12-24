@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: "jysinakscluster-0b6f"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "jysinakscluster-0b6f"
+  template:
+    metadata:
+      labels:
+        app: "jysinakscluster-0b6f"
+    spec:
+      containers:
+        - name: "jysinakscluster-0b6f"
+          image: "jysintestrigistry.azurecr.io/jysinakscluster"
+          ports:
+          - containerPort: 80
