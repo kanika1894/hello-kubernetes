@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: "jysinakscluster-1bf8"
+    labels:
+        app: "jysinakscluster-1bf8"
+spec:
+    type: LoadBalancer
+    ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+      name: http
+    selector:
+        app: "jysinakscluster-1bf8"
