@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: "jysinakscluster-bffa"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "jysinakscluster-bffa"
+  template:
+    metadata:
+      labels:
+        app: "jysinakscluster-bffa"
+    spec:
+      containers:
+        - name: "jysinakscluster-bffa"
+          image: "jysintestrigistry.azurecr.io/jysinakscluster"
+          ports:
+          - containerPort: 80
