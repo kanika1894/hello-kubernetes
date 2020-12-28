@@ -13,12 +13,6 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     
-    - name: Set up QEMU
-      uses: docker/setup-qemu-action@v1
-        
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
-    
     - name: Login to ACR
       uses: docker/login-action@v1
       with:
@@ -26,18 +20,10 @@ jobs:
         username: ${{ env.REGISTRY_USERNAME_1 }}
         password: ${{ env.REGISTRY_PASSWORD_1 }}
     
-    - name: Build and push Docker images
-      id: docker_build
-      uses: Josh-01/build-push-action@AddDockerfilePathToImageLabel
-      with:
-        # Build's context is the set of files located in the specified PATH or URL
-        context: .
-        # List of tags
-        tags: |
-          jysintestregistry.azurecr.io/jysindemoimage:first
-          ${{ env.IMAGE_NAME_1 }}
-        push: true
-        trace-data: true  
+    - run: |
+        docker build . -t ${{ env.IMAGE_NAME_1 }} --label dockerfile-path=./Dockerfile
+        docker push ${{ env.IMAGE_NAME_1 }}
+      
    
     - uses: azure/k8s-set-context@v1
       with:
