@@ -21,7 +21,7 @@ jobs:
         password: ${{ env.REGISTRY_PASSWORD_1 }}
     
     - run: |
-        docker build . -t ${{ env.IMAGE_NAME_1 }} --label dockerfile-path=https://github.com/Josh-01/hello-kubernetes/blob/master/Dockerfile
+        docker build . -t ${{ env.IMAGE_NAME_1 }}
         docker push ${{ env.IMAGE_NAME_1 }}
       
    
