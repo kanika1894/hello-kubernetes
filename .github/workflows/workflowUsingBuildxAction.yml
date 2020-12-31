@@ -3,7 +3,7 @@ on: [push]
 jobs:
   build-and-deploy:
     env:
-      NAMESPACE: jysindemo-ns3
+      NAMESPACE: jysindemo-ns4
       REGISTRY_URL_1: jysintestregistry.azurecr.io
       REGISTRY_USERNAME_1: ${{ secrets.AZURE_CLIENT_ID }}
       REGISTRY_PASSWORD_1: ${{ secrets.AZURE_CLIENT_SECRET }}
@@ -21,7 +21,7 @@ jobs:
         password: ${{ env.REGISTRY_PASSWORD_1 }}
     
     - run: |
-        docker build . -t ${{ env.IMAGE_NAME_1 }}
+        docker build . -t ${{ env.IMAGE_NAME_1 }} --label dockerfile-path=./Dockerfile
         docker push ${{ env.IMAGE_NAME_1 }}
       
    
