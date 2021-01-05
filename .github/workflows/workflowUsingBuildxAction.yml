@@ -3,7 +3,7 @@ on: [push]
 jobs:
   build-and-deploy:
     env:
-      NAMESPACE: jysindemo-ns1
+      NAMESPACE: jysindemo-ns2
       REGISTRY_URL_1: jysintestregistry.azurecr.io
       REGISTRY_USERNAME_1: ${{ secrets.AZURE_CLIENT_ID }}
       REGISTRY_PASSWORD_1: ${{ secrets.AZURE_CLIENT_SECRET }}
@@ -46,7 +46,7 @@ jobs:
         container-registry-password: ${{ env.REGISTRY_PASSWORD_1 }}
         secret-name: demo-k8s-secret
             
-    - uses: Azure/k8s-deploy@v1.3
+    - uses: Azure/k8s-deploy@users/jysin/PMFeedbackChanges1_3
       with:
         namespace: ${{ env.NAMESPACE }}
         imagepullsecrets: demo-k8s-secret
