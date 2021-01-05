@@ -3,7 +3,7 @@ on: [push]
 jobs:
   build-and-deploy:
     env:
-      NAMESPACE: jysindemo-ns4
+      NAMESPACE: jysindemo-ns1
       REGISTRY_URL_1: jysintestregistry.azurecr.io
       REGISTRY_USERNAME_1: ${{ secrets.AZURE_CLIENT_ID }}
       REGISTRY_PASSWORD_1: ${{ secrets.AZURE_CLIENT_SECRET }}
