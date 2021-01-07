@@ -1,7 +1,7 @@
 on: [push]
 env:
     REGISTRY_URL: jysintestregistry.azurecr.io
-    NAMESPACE: jysindemo-ns3
+    NAMESPACE: jysindemo-ns5
     CR_USERNAME: ${{ secrets.AZURE_CLIENT_ID }}
     CR_PASSWORD: ${{ secrets.AZURE_CLIENT_SECRET }}
   
@@ -46,6 +46,7 @@ jobs:
         overrides: |     
           replicas:2
         helm-version: 'latest' 
+        silent: false 
       id: bake
             
     - uses: Azure/k8s-deploy@v1.3
