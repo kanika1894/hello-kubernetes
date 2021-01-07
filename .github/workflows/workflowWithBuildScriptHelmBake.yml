@@ -6,7 +6,7 @@ env:
     CR_PASSWORD: ${{ secrets.AZURE_CLIENT_SECRET }}
   
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -17,10 +17,6 @@ jobs:
         registry: ${{ env.REGISTRY_URL }}
         username: ${{ env.CR_USERNAME }}
         password: ${{ env.CR_PASSWORD }}
-    
-    - run: |
-        docker build . -t jysintestregistry.azurecr.io/jysindemoimage:${{ github.sha }} --label dockerfile-path=./Dockerfile
-        docker push jysintestregistry.azurecr.io/jysindemoimage:${{ github.sha }}
     
     - uses: azure/k8s-set-context@v1
       with:
@@ -42,13 +38,20 @@ jobs:
         container-registry-username: ${{ env.CR_USERNAME }}
         container-registry-password: ${{ env.CR_PASSWORD }}
         secret-name: demo-k8s-secret
+        
+    - uses: azure/k8s-bake@feature/traceabilityChanges
+      with:
+        renderEngine: 'helm'
+        helmChart: './helmcharts/' 
+        overrides: |     
+          replicas:2
+        helm-version: 'latest' 
+      id: bake
             
-    - uses: Azure/k8s-deploy@users/jysin/ConfigFilePathsAddition1_3
+    - uses: Azure/k8s-deploy@v1.3
       with:
         namespace: ${{ env.NAMESPACE }}
         imagepullsecrets: demo-k8s-secret
-        manifests: |
-          .devcontainer/manifests/deployment.yml
-          .devcontainer/manifests/service.yml
+        manifests: ${{ steps.bake.outputs.manifestsBundle }}
         images: |
-          jysintestregistry.azurecr.io/jysindemoimage:${{ github.sha }}
+          jysintestregistry.azurecr.io/jysindemoimage:first
