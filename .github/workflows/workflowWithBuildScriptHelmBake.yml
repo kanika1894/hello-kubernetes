@@ -1,7 +1,7 @@
 on: [push]
 env:
     REGISTRY_URL: jysintestregistry.azurecr.io
-    NAMESPACE: jysindemo-ns5
+    NAMESPACE: jysindemo-ns7
     CR_USERNAME: ${{ secrets.AZURE_CLIENT_ID }}
     CR_PASSWORD: ${{ secrets.AZURE_CLIENT_SECRET }}
   
