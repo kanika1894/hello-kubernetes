@@ -17,6 +17,10 @@ jobs:
         registry: ${{ env.REGISTRY_URL }}
         username: ${{ env.CR_USERNAME }}
         password: ${{ env.CR_PASSWORD }}
+        
+    - run: |
+        docker build . -t jysintestregistry.azurecr.io/jysindemoimage:${{ github.sha }} --label dockerfile-path=./Dockerfile
+        docker push jysintestregistry.azurecr.io/jysindemoimage:${{ github.sha }}
     
     - uses: azure/k8s-set-context@v1
       with:
@@ -55,4 +59,4 @@ jobs:
         imagepullsecrets: demo-k8s-secret
         manifests: ${{ steps.bake.outputs.manifestsBundle }}
         images: |
-          jysintestregistry.azurecr.io/jysindemoimage:first
+          jysintestregistry.azurecr.io/jysindemoimage:${{ github.sha }}
