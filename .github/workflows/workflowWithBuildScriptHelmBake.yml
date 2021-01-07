@@ -23,7 +23,7 @@ jobs:
          kubeconfig: ${{ secrets.AKS_JYSINAKS2_KUBECONFIG }}
       id: login
     
-    - name: Create namespace
+    - name: Create namespace s
       run: |
         namespacePresent=`kubectl get namespace | grep $NAMESPACE | wc -l`
         if [ $namespacePresent -eq 0 ]
