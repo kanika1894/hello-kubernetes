@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: jysindemoapp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: jysindemoapp
+  template:
+    metadata:
+      labels:
+        app: jysindemoapp
+    spec:
+      containers:
+        - name: jysintestcontainer
+          image: jysintestregistry.azurecr.io/jysindemoimage
+          ports:
+          - containerPort: 80
