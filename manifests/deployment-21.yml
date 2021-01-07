@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: "jysinaks1-bcae"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "jysinaks1-bcae"
+  template:
+    metadata:
+      labels:
+        app: "jysinaks1-bcae"
+    spec:
+      containers:
+        - name: "jysinaks1-bcae"
+          image: "jysintestregistry.azurecr.io/jysinaks1"
+          ports:
+          - containerPort: 80
