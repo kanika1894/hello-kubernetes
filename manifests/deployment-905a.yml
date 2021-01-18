@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: "democluster-905a"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "democluster-905a"
+  template:
+    metadata:
+      labels:
+        app: "democluster-905a"
+    spec:
+      containers:
+        - name: "democluster-905a"
+          image: "kapasrijkubacr.azurecr.io/democluster905a"
+          ports:
+          - containerPort: 80
